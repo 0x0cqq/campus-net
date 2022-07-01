@@ -47,22 +47,34 @@
     </div>
     <div id="bar">
       <div id="corner"></div>
-      <button id="disconnect-button">
+      <button id="disconnect-button" @click="clickDisconnect()">
         <p id="chinese-disconnect">断开连接</p>
         <p class="english" id="english-disconnect">Disconnect</p>
       </button>
     </div>
+    <div id="links">
+      <div v-for="item in links" :key="item.name" class="link">
+        <img class="link-img" :src="item.img" />
+        <a class="link-text english" :href="item.link">{{item.name}}</a>
+      </div>
+    </div>
   </div>
+
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import infoImg from '@/assets/popup_info.gif'
+import libImg from '@/assets/popup_lib.gif'
+import learnImg from '@/assets/popup_learn.gif'
+import mailImg from '@/assets/popup_mail.gif'
 
 @Options({
   props: {
     name: String
   }
 })
+
 export default class Info extends Vue {
   name!: string
   hour!: string
@@ -70,13 +82,40 @@ export default class Info extends Vue {
   second!: string
   startDate!: Date
   usageNumber!: number // record as bytes
+  buttonColor!: string
+  /* eslint-disable-next-line */
+  links!: Array<{name : string, link : string, img : any}>
+
   data () {
     return {
       hour: '00',
       minute: '00',
       second: '00',
       startDate: new Date(),
-      usageNumber: 10000000000
+      usageNumber: 10000000000,
+      buttonColor: '#c0bdcc',
+      links: [
+        {
+          name: 'Info',
+          img: infoImg,
+          link: 'http://info.tsinghua.edu.cn'
+        },
+        {
+          name: 'Lib',
+          img: libImg,
+          link: 'https://lib.tsinghua.edu.cn'
+        },
+        {
+          name: 'Learn',
+          img: learnImg,
+          link: 'https://learn.tsinghua.edu.cn'
+        },
+        {
+          name: 'Mail',
+          img: mailImg,
+          link: 'https://mails.tsinghua.edu.cn'
+        }
+      ]
     }
   }
 
@@ -85,6 +124,7 @@ export default class Info extends Vue {
     setInterval(() => {
       this.updateTime()
     }, 500)
+    console.log('Info mounted')
   }
 
   public updateTime () : void {
@@ -96,6 +136,10 @@ export default class Info extends Vue {
     this.hour = hour.toString().padStart(2, '0')
     this.minute = minute.toString().padStart(2, '0')
     this.second = second.toString().padStart(2, '0')
+  }
+
+  public clickDisconnect () : void {
+    alert('您已断开连接')
   }
 
   get usageNumberLength () : string {
@@ -238,6 +282,12 @@ export default class Info extends Vue {
   background-color: #c0bdcc;
   border: #B2AABE solid 1px;
 }
+#disconnect-button:hover {
+  background-color: #d6d2e0;
+}
+#disconnect-button:active {
+  background-color: #b1aac4;
+}
 #chinese-disconnect {
   font-family: "Dengxian";
   font-weight: bold;
@@ -320,4 +370,28 @@ export default class Info extends Vue {
 #welcome-text {
   margin: 32px 0 0 32px;
 }
+.link-img {
+}
+.link-text {
+  color: #AD3B23;
+  font-size: 11px;
+  margin: 0px 5px;
+}
+.link {
+  margin: 0px 5px;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+#links {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 0px;
+  top: 300px;
+}
+
 </style>

@@ -1,65 +1,66 @@
 <template>
-  <div id="greeting">
-    <div id="welcome-text">
-      <p id="laugh-welcome">:P</p>
-      <p id="chinese-welcome">欢迎,</p>
-      <p id="english-welcome">Welcome,</p>
-    </div>
-    <div id="greeting-triangle"></div>
-  </div>
-  <div id="info-block">
-    <h2 id="user-name">{{ name }}</h2>
-    <div style="height:22px"></div>
-    <div id="info-content">
-      <div class="info-block" id="connect-info">
-        <div class="label-text">
-          <p>已连接</p>
-          <p class="english">Duration</p>
-        </div>
-        <div class="info-block-content" id="connect-time">
-          <p id="display-connect-time">{{hour}}:{{minute}}:{{second}}</p>
-        </div>
+  <div id="info">
+    <div id="greeting">
+      <div id="welcome-text">
+        <p id="laugh-welcome">:P</p>
+        <p id="chinese-welcome">欢迎,</p>
+        <p id="english-welcome">Welcome.</p>
       </div>
-      <div class="info-block" id="usage-info">
-        <div class="label-text">
-          <p>已用流量</p>
-          <p class="english">Usage</p>
-        </div>
-        <div class="info-block-content" id="usage">
-          <div id="usage-volume">
-            <p>&nbsp;&nbsp;&nbsp;</p>
-            <p>&nbsp;&nbsp;&nbsp;</p>
-            <p>&nbsp;50</p>
-            <p>&nbsp;75</p>
-            <p>100</p>
-            <p>125</p>
+      <div id="greeting-triangle"></div>
+    </div>
+    <div id="info-block">
+      <h2 id="user-name">{{ name }}</h2>
+      <div style="height:22px"></div>
+      <div id="info-content">
+        <div class="info-block" id="connect-info">
+          <div class="label-text">
+            <p>已连接</p>
+            <p class="english">Duration</p>
           </div>
-          <div id="usage-bar">
-            <div id="usage-bar-fill" :style="{width : usageNumberLength}"></div>
-            <div id="usage-number">{{usageNumberText}}</div>
-            <div id="usage-bar-50"></div>
-            <div id="usage-bar-50-75"></div>
-            <div id="usage-bar-75-100"></div>
-            <div id="usage-bar-100-125"></div>
+          <div class="info-block-content" id="connect-time">
+            <p id="display-connect-time">{{hour}}:{{minute}}:{{second}}</p>
           </div>
         </div>
+        <div class="info-block" id="usage-info">
+          <div class="label-text">
+            <p>已用流量</p>
+            <p class="english">Usage</p>
+          </div>
+          <div class="info-block-content" id="usage">
+            <div id="usage-volume">
+              <p>&nbsp;&nbsp;&nbsp;</p>
+              <p>&nbsp;&nbsp;&nbsp;</p>
+              <p>&nbsp;50</p>
+              <p>&nbsp;75</p>
+              <p>100</p>
+              <p>125</p>
+            </div>
+            <div id="usage-bar">
+              <div id="usage-bar-fill" :style="{width : usageNumberLength}"></div>
+              <div id="usage-number">{{usageNumberText}}</div>
+              <div id="usage-bar-50"></div>
+              <div id="usage-bar-50-75"></div>
+              <div id="usage-bar-75-100"></div>
+              <div id="usage-bar-100-125"></div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div id="bar">
-      <div id="corner"></div>
-      <button id="disconnect-button" @click="clickDisconnect()">
-        <p id="chinese-disconnect">断开连接</p>
-        <p class="english" id="english-disconnect">Disconnect</p>
-      </button>
-    </div>
-    <div id="links">
-      <div v-for="item in links" :key="item.name" class="link">
-        <img class="link-img" :src="item.img" />
-        <a class="link-text english" :href="item.link">{{item.name}}</a>
+      <div id="bar">
+        <div id="corner"></div>
+        <button id="disconnect-button" @click="clickDisconnect()">
+          <p id="chinese-disconnect">断开连接</p>
+          <p class="english" id="english-disconnect">Disconnect</p>
+        </button>
+      </div>
+      <div id="links">
+        <div v-for="item in links" :key="item.name" class="link">
+          <img class="link-img" :src="item.img" />
+          <a class="link-text english" :href="item.link">{{item.name}}</a>
+        </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script lang="ts">
@@ -168,12 +169,60 @@ export default class Info extends Vue {
   padding: 0%;
   border: 0;
 }
-#info-block {
+#info{
   position: relative;
-  left: 128px;
+  margin: 10% 5% ;
+}
+#greeting {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  max-width: 512px;
+  height: 224px;
+  background-color: #E64E2E;
+  z-index: -1;
+  box-shadow: 0 0 8px rgb(0 0 0 / 10%);
+  color: #FFFFFF;
+}
+#greeting-triangle {
+  position: absolute;
+  bottom: -48px;
+  left: 32px;
+  border-color: #E64E2E transparent ;
+  border-width: 48px 48px 0 0;
+  border-style: solid;
+}
+#laugh-welcome {
+  margin-top: -15px;
+  font-size: 80px;
+  font-weight: lighter;
+}
+#chinese-welcome {
+  margin-top: 20px;
+  font-family: "Dengxian";
+  font-weight: lighter;
+  font-size: 30px;
+  margin-top: 0px;
+}
+#english-welcome {
+  margin-top: 15px;
+  font-size: 20px;
+  color: rgba(255,255, 255,0.9);
+  font-family: "Dengxian";
+  font-weight: lighter
+}
+#welcome-text {
+  margin: 32px 0 0 32px;
+}
+#info-block {
+  position: absolute;
   top: 32px;
-  width: 352px;
-  height: 208px;
+  left: 128px;
+  width: calc(80% - 32px);
+  max-width: 352px;
+  min-width: 200px;
+  min-height: 208px;
   padding: 32px;
   background-color: #f2f2f2;
 }
@@ -193,7 +242,8 @@ export default class Info extends Vue {
 }
 #usage-bar {
   position: relative;
-  width: 280px;
+  width: 100%;
+  max-width: 280px;
   height: 32px;
 }
 #usage-volume {
@@ -201,7 +251,8 @@ export default class Info extends Vue {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 280px;
+  width: 100%;
+  max-width: 280px;
 }
 #usage-volume p {
   font-family: Verdana, Geneva, sans-serif;
@@ -303,8 +354,10 @@ export default class Info extends Vue {
 }
 .info-block-content {
   margin: 0px 10px;
+  width: 100%;
 }
 .info-block {
+  width: auto;
   display: flex;
   flex-direction: row;
 }
@@ -319,6 +372,7 @@ export default class Info extends Vue {
   /* float: left; */
   text-align: right;
   margin: 0%;
+  white-space:nowrap;
 }
 .english {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -330,45 +384,6 @@ export default class Info extends Vue {
   border-color: transparent #CCCCCC;
   border-width: 16px 0 0 16px;
   border-style: solid;
-}
-#greeting {
-  position: absolute;
-  width: 512px;
-  height: 224px;
-  background-color: #E64E2E;
-  z-index: -1;
-  box-shadow: 0 0 8px rgb(0 0 0 / 10%);
-  color: #FFFFFF;
-}
-#greeting-triangle {
-  position: absolute;
-  top: 224px;
-  left: 32px;
-  border-color: #E64E2E transparent ;
-  border-width: 48px 48px 0 0;
-  border-style: solid;
-}
-#laugh-welcome {
-  margin-top: -15px;
-  font-size: 80px;
-  font-weight: lighter;
-}
-#chinese-welcome {
-  margin-top: 20px;
-  font-family: "Dengxian";
-  font-weight: lighter;
-  font-size: 30px;
-  margin-top: 0px;
-}
-#english-welcome {
-  margin-top: 15px;
-  font-size: 20px;
-  color: rgba(255,255, 255,0.9);
-  font-family: "Dengxian";
-  font-weight: lighter
-}
-#welcome-text {
-  margin: 32px 0 0 32px;
 }
 .link-img {
 }
@@ -389,9 +404,23 @@ a:hover {
 #links {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   position: absolute;
   right: 0px;
   top: 300px;
 }
-
+@media (max-width: 600px) {
+  #info-block {
+    position: relative !important;
+    left: 0px;
+    top: 48px;
+  }
+  #greeting {
+    position: relative !important;
+    height: auto !important;
+  }
+  #welcome-text p {
+    display: inline-block;
+  }
+}
 </style>

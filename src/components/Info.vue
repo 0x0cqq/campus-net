@@ -385,8 +385,6 @@ export default class Info extends Vue {
   border-width: 16px 0 0 16px;
   border-style: solid;
 }
-.link-img {
-}
 .link-text {
   color: #AD3B23;
   font-size: 11px;

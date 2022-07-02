@@ -12,3 +12,6 @@ jobs:
         username: ChenQiqian
         reponame: campus-net
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
+        cname: blog.cqqqwq.com
+        gitname: github-actions[bot]
+        gitemail: github-actions[bot]@users.noreply.github.com

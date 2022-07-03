@@ -125,7 +125,6 @@ export default class Info extends Vue {
     setInterval(() => {
       this.updateTime()
     }, 500)
-    console.log('Info mounted')
   }
 
   public updateTime () : void {
@@ -163,7 +162,7 @@ export default class Info extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 * {
   margin: 0%;
   padding: 0%;

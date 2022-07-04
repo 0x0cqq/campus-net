@@ -1,4 +1,4 @@
 import { createApp } from 'vue'
 import Succeed from './Succeed.vue'
 
-createApp(Succeed).mount('#app')
+createApp(Succeed).mount('#succeed')

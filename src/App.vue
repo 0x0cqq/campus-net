@@ -22,6 +22,9 @@
   </div>
   <Login>
   </Login>
+  <a href="./succeed">
+    <button>test</button>
+  </a>
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
@@ -30,6 +33,7 @@ import schoolLogo from '@/assets/logo.svg'
 import wifiLogo from '@/assets/wifi.svg'
 import qrcodeImg from '@/assets/qrcode.jpg'
 import atTsinghuaImg from '@/assets/attsinghua.png'
+// import { useRouter } from 'vue-router'
 
 @Options({
   components: {
@@ -41,10 +45,12 @@ export default class App extends Vue {
   wifi: string = wifiLogo
   qrcode: string = qrcodeImg
   atTsinghua : string = atTsinghuaImg
+  // router = useRouter()
 }
 </script>
 
-<style scoped>
+<style>
+@import "./assets/font.css";
 * {
   margin: 0%;
   padding: 0%;

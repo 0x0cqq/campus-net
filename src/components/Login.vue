@@ -1,8 +1,18 @@
 <template>
   <div id="login">
     <div id="greeting">
+      <div id="greeting-text">
+        <p class="english">;)</p>
+        <p>你好,Hi,</p>
+      </div>
       <div id="greeting-triangle"></div>
-      <div id="noticing"></div>
+      <div id="noticing-box">
+        <div id="note-bar">
+          <embed :src="noteImg" type="image/svg+xml" />
+          <p>通知</p>
+          <p class="english">Notification</p>
+        </div>
+      </div>
       <div id="corner"></div>
     </div>
     <div id="login-box">
@@ -41,6 +51,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import noteLogo from '@/assets/note.svg'
 
 @Options({
   props: {
@@ -55,6 +66,7 @@ export default class Login extends Vue {
   targetUrl!: string
   username!: string
   password!: string
+  noteImg : string = noteLogo
   public submit (): void {
     // empty now
     alert('submit')
@@ -67,6 +79,7 @@ export default class Login extends Vue {
   margin: 0;
   padding: 0;
 }
+
 #login {
   position: relative;
   margin: auto;
@@ -83,10 +96,11 @@ export default class Login extends Vue {
 
 #login-box {
   position: absolute;
-  left: calc(50% - 40px);
+  left: calc(50% - 56px);
   top: 32px;
   max-width: 400px;
   min-height: 240px;
+  width: 100%;
   padding: 32px;
   background: #F2F2F2;
   -webkit-box-shadow: 0 0 8px rgb(0 0 0 / 10%);
@@ -109,7 +123,7 @@ export default class Login extends Vue {
   border-width: 48px 48px 0 0;
 }
 
-#login-triangle {
+#login-triangle, #corner, #greeting-triangle{
   width: 0;
   height: 0;
   border-style: solid;
@@ -180,5 +194,70 @@ input:focus {
   font-size: 18px;
   font-family: Dengxian;
   /* font-weight: lighter; */
+}
+#greeting-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  color: #ffffff;
+  margin : 20px 0 0 20px;
+}
+#greeting-text p {
+  font-size: 50px;
+  /* font-weight: lighter; */
+  font-family: "FZLTCXHJW", DengXian, "PingFang SC";
+}
+#greeting-text .english {
+  font-size: 96px;
+  /* margin: 0 10px; */
+  font-family: 'SimSun'
+}
+#noticing-box {
+  height: 160px;
+  max-width : 320px;
+  width: calc(50% - 40px);
+  position: absolute;
+  left: -16px;
+  bottom: 0px;
+  background-color: #e6562e;
+  z-index: 1;
+  box-shadow: 0 0 8px rgb(0 0 0 / 10%);
+}
+#corner {
+  border-color: transparent #AD3B23;
+  border-width: 16px 16px 0 0;
+  position: absolute;
+  left: -16px;
+  bottom: 160px;
+}
+#greeting-triangle {
+  border-color: transparent #E64E2E;
+  border-width:  0 0 48px 48px;
+  position: absolute;
+  left: 48px;
+  bottom: -48px;
+}
+#note-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin: 10px;
+  color: rgba(255,255,255,0.8);
+  font-family: FZLTCXHJW, DengXian, "PingFang SC";
+  font-size: 22px;
+}
+#note-bar embed {
+  margin: 0px 5px;
+}
+#note-bar p {
+  margin: 0px 2px;
+}
+#note-bar .english{
+  font-size: 14px;
+  font-family: Dengxian;
 }
 </style>

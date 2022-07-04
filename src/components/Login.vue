@@ -222,7 +222,7 @@ export default class Login extends Vue {
   top: 32px;
   max-width: 400px;
   min-height: 240px;
-  width: 100%;
+  width: 80%;
   padding: 32px;
   background: #F2F2F2;
   -webkit-box-shadow: 0 0 8px rgb(0 0 0 / 10%);
@@ -298,6 +298,7 @@ input:focus {
 }
 .label-text p {
   font-size: 21px;
+  white-space: nowrap;
 }
 
 .label-text p.english {
@@ -464,6 +465,7 @@ a:hover {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .link-label-text p{
   font-size: 12px;
@@ -473,5 +475,28 @@ a:hover {
   display: flex;
   flex-direction: row;
   margin: 0px 0px 0px 5px;
+}
+@media (max-width:800px) {
+  #greeting {
+    width: 80% !important;
+  }
+  #noticing-box {
+    width: 100%;
+  }
+  #login-box {
+    position: relative !important;
+    margin: auto !important;
+    left: unset !important;
+    top: unset !important;
+    height: auto !important;
+    width: 60%;
+  }
+  input {
+    width: 100% !important;
+  }
+  #foot-bar {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
 }
 </style>

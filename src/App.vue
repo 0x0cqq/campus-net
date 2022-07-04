@@ -106,4 +106,9 @@ export default class App extends Vue {
   color: #6e6e6e;
   font-size: 12px;
 }
+@media (max-width:800px) {
+  #copyright {
+    right: unset !important;
+  }
+}
 </style>

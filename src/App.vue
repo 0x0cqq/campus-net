@@ -20,8 +20,11 @@
       <img id="mobile-qrcode" :src="atTsinghua" alt="atTsinghua">
     </div>
   </div>
-  <Login>
-  </Login>
+  <Login></Login>
+  <div id="copyright">
+    <p>华清大学土豆种植技术中心</p>
+    <p class="english">InfoPotato Technology Center of Thursday University</p>
+  </div>
   <a href="./succeed">
     <button>test</button>
   </a>
@@ -49,7 +52,7 @@ export default class App extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 @import "./assets/font.css";
 * {
   margin: 0%;
@@ -94,5 +97,13 @@ export default class App extends Vue {
 }
 #header-mobile{
   margin: auto 10px;
+}
+#copyright {
+  margin-top: 64px;
+  position: relative;
+  right: calc(50% - 384px);
+  text-align: right;
+  color: #6e6e6e;
+  font-size: 12px;
 }
 </style>

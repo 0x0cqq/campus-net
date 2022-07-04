@@ -12,6 +12,29 @@
           <p>通知</p>
           <p class="english">Notification</p>
         </div>
+        <div id="notice-container">
+          <div class="scrolling">
+为保障师生的密码安全，学校即日起组织开展2022年度电子身份年审工作。具体通知如下：
+
+      一、年审范围：全校师生员工（包含离退休人员）
+
+      二、年审方式：
+
+      用户可以通过以下任意一种渠道修改个人密码：
+
+     1、登录学校用户电子身份服务系统（https://id.tsinghua.edu.cn）；
+
+     2、进入“清华大学信息服务”微信公众号的“认证助手”；
+
+     3、访问学校信息门户（http://info.tsinghua.edu.cn）。
+
+     具体操作请见附件《电子身份年审用户操作说明（2022年度）》。
+
+     三、特别提示：
+
+     用户电子身份服务系统具备绑定手机找回密码功能，建议用户在修改个人密码的同时绑定手机号。
+          </div>
+        </div>
       </div>
       <div id="corner"></div>
     </div>
@@ -217,6 +240,8 @@ input:focus {
   font-family: 'SimSun'
 }
 #noticing-box {
+  display: flex;
+  flex-direction: column;
   height: 160px;
   max-width : 320px;
   width: calc(50% - 40px);
@@ -259,5 +284,23 @@ input:focus {
 #note-bar .english{
   font-size: 14px;
   font-family: Dengxian;
+}
+#notice-container {
+  overflow: hidden;
+  height: 100%;
+  padding: 20px 10px;
+  color: rgba(255,255,255, 0.8);
+}
+.scrolling {
+  animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(-110%);
+  }
 }
 </style>

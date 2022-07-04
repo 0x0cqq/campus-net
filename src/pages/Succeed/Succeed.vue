@@ -20,11 +20,15 @@ export default class Succeed extends Vue {
 }
 </script>
 
-<style scoped>
+<style>
 #succeed {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
+  /* display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center; */
 }
 body {
   background: #E6E6E6;

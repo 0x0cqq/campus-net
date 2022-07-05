@@ -72,7 +72,10 @@ import mailImg from '@/assets/popup_mail.gif'
 
 @Options({
   props: {
-    name: String
+    name: {
+      type: String,
+      default: 'NO-NAME'
+    }
   }
 })
 

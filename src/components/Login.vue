@@ -21,34 +21,32 @@
       <div id="corner"></div>
     </div>
     <div id="login-box">
-      <form action="" method="get">
-        <div class="login-form">
-          <div id="username-line" class="line">
-            <div id="username-label" class="label-text">
-              <p>用户名</p>
-              <p class="english">User ID</p>
-            </div>
-            <div id="username-input">
-              <input class="input-box" type="text" v-model="username" />
-            </div>
+      <div class="login-form">
+        <div id="username-line" class="line">
+          <div id="username-label" class="label-text">
+            <p>用户名</p>
+            <p class="english">User ID</p>
           </div>
-          <div id="password-line" class="line">
-            <div id="password-label" class="label-text">
-              <p>密码</p>
-              <p class="english">Password</p>
-            </div>
-            <div id="password-input">
-              <input class="input-box" type="password" v-model="password" />
-            </div>
+          <div id="username-input">
+            <input class="input-box" type="text" v-model="username" />
           </div>
         </div>
-        <div id="button-line" class="line">
-          <button id="submit-button" @click="submit()">
-            <p>连接</p>
-            <p class="english">Connect</p>
-          </button>
+        <div id="password-line" class="line">
+          <div id="password-label" class="label-text">
+            <p>密码</p>
+            <p class="english">Password</p>
+          </div>
+          <div id="password-input">
+            <input class="input-box" type="password" v-model="password" />
+          </div>
         </div>
-      </form>
+      </div>
+      <div id="button-line" class="line">
+        <button id="submit-button" @click="submit()" @keydown.enter="submit()">
+          <p>连接</p>
+          <p class="english">Connect</p>
+        </button>
+      </div>
       <div id="login-triangle"></div>
     </div>
   </div>
@@ -190,8 +188,17 @@ export default class Login extends Vue {
   ]
 
   public submit (): void {
-    // empty now
-    alert('submit')
+    // alert('submit')
+    this.axios.post('/api/login', {
+      username: this.username,
+      password: this.password
+    }).then(res => {
+      console.log(res)
+      window.location.href = '/succeed'
+    }).catch(err => {
+      alert('用户名或密码错误！')
+      console.log(err)
+    })
   }
 }
 

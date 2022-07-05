@@ -1,5 +1,5 @@
 <template>
-  <Info name="cqqthu20"></Info>
+  <Info :name="name"></Info>
 </template>
 
 <script lang="ts">
@@ -12,10 +12,18 @@ import Info from '../../components/Info.vue'
   }
 })
 export default class Succeed extends Vue {
+  name!: string
   data () {
     return {
-      name: 'cqqthu20'
+      name: this.name
     }
+  }
+
+  mounted () {
+    this.axios.get('/api/get_username').then(res => {
+      console.log(res.data)
+      this.name = res.data
+    })
   }
 }
 </script>

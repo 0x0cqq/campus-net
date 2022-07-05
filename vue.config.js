@@ -3,9 +3,11 @@ module.exports = defineConfig({
   transpileDependencies: true
 })
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/campus-net/'
-    : '/',
+  publicPath: '/',
+  // publicPath: process.env.NODE_ENV === 'production'
+  //   ? '/campus-net/'
+  //   : '/',
+  assetsDir: 'static',
   pages: {
     // 先配置主页
     index: {

@@ -7,32 +7,37 @@ database_path = os.path.join(os.path.dirname(__file__), "users_data.db")
 
 app = Flask(__name__, template_folder='./dist', static_folder='./dist/static')
 
-def create_db_if_not_exist():
-    connection = sqlite3.connect(database=database_path)
-    cursor = connection.cursor()
-    try:
-        cursor.execute("create table if not exists users(username text, password text, userid text)")
-        connection.commit()
-    finally:
-        cursor.close()
-        connection.close()
 
-def update_user_userid(username : str, userid : str):
+def create_db_if_not_exist() -> None:
     connection = sqlite3.connect(database=database_path)
     cursor = connection.cursor()
     try:
-        cursor.execute("update users set userid = ? where username = ?", (userid, username))
+        cursor.execute(
+            "create table if not exists users(username text, password text, userid text, usage_volume real ,primary key(username))")
         connection.commit()
     finally:
         cursor.close()
         connection.close()
 
 
-def check_userid_exist(userid : str):
+def update_user_userid(username: str, userid: str) -> None:
     connection = sqlite3.connect(database=database_path)
     cursor = connection.cursor()
     try:
-        rows = cursor.execute("select * from users where userid = ?", (userid,)).fetchall()
+        cursor.execute(
+            "update users set userid = ? where username = ?", (userid, username))
+        connection.commit()
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def check_userid_exist(userid: str) -> bool:
+    connection = sqlite3.connect(database=database_path)
+    cursor = connection.cursor()
+    try:
+        rows = cursor.execute(
+            "select * from users where userid = ?", (userid,)).fetchall()
         if(len(rows) == 0):
             return False
         else:
@@ -40,15 +45,17 @@ def check_userid_exist(userid : str):
     finally:
         cursor.close()
         connection.close()
-    
 
-def create_user(username : str, password : str):
+
+def create_user(username: str, password: str) -> bool:
     connection = sqlite3.connect(database=database_path)
     cursor = connection.cursor()
     try:
-        rows = cursor.execute("select * from users where username = ?", (username,)).fetchall()
+        rows = cursor.execute(
+            "select * from users where username = ?", (username,)).fetchall()
         if(len(rows) == 0):
-            cursor.execute("insert into users values (?, ?, null)", (username, password))
+            cursor.execute(
+                "insert into users values (?, ?, null, 0)", (username, password))
             connection.commit()
             return True
         else:
@@ -57,11 +64,13 @@ def create_user(username : str, password : str):
         cursor.close()
         connection.close()
 
-def check_user_password(username : str, password : str):
+
+def check_user_password(username: str, password: str) -> bool:
     connection = sqlite3.connect(database=database_path)
     cursor = connection.cursor()
     try:
-        rows = cursor.execute("select * from users where username = ?", (username,)).fetchall()
+        rows = cursor.execute(
+            "select * from users where username = ?", (username,)).fetchall()
         if(len(rows) == 0):
             return False
         else:
@@ -73,11 +82,13 @@ def check_user_password(username : str, password : str):
         cursor.close()
         connection.close()
 
-def is_user_exist(username : str):
+
+def is_user_exist(username: str) -> bool:
     connection = sqlite3.connect(database=database_path)
     cursor = connection.cursor()
     try:
-        rows = cursor.execute("select * from users where username = ?", (username,)).fetchall()
+        rows = cursor.execute(
+            "select * from users where username = ?", (username,)).fetchall()
         if(len(rows) == 0):
             return False
         else:
@@ -86,28 +97,87 @@ def is_user_exist(username : str):
         cursor.close()
         connection.close()
 
+
+def get_usage_volume_from_userid(userid: str):
+    connection = sqlite3.connect(database=database_path)
+    cursor = connection.cursor()
+    try:
+        rows = cursor.execute(
+            "select usage_volume from users where userid = ?", (userid,)).fetchall()
+        if(len(rows) == 0):
+            return -1
+        else:
+            return rows[0][0]
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def update_usage_volume_from_userid(userid: str, usage_volume: float) -> bool:
+    connection = sqlite3.connect(database=database_path)
+    cursor = connection.cursor()
+    try:
+        if(not check_userid_exist(userid)):
+            print("update volume: userid not exist")
+            return False
+        cursor.execute(
+            "update users set usage_volume = ? where userid = ?", (usage_volume, userid))
+        connection.commit()
+        return True
+    finally:
+        cursor.close()
+        connection.close()
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/succeed')
 def succeed():
     # check cookie to see whether user is logged in
     userid = request.cookies.get('userid')
     if(userid is None or not check_userid_exist(userid)):
-        # redirect to main page 
-        return redirect(url_for(''))
+        # redirect to main page
+        return redirect('/')
     else:
-        return render_template("succeed.html")
+        # disable cache
+        return make_response(render_template("succeed.html"), 200, {'Cache-Control': 'no-cache'})
+
+# API part
+
+# get/update user usage volume by cookie userid
+
+
+@app.route('/api/usage_volume', methods=['GET', 'POST'])
+def usage_volume():
+    userid = request.cookies.get('userid')
+    if(userid is None or not check_userid_exist(userid)):
+        return "userid not exist", 401
+
+    if(request.method == 'GET'):
+        return str(get_usage_volume_from_userid(userid))
+    elif(request.method == 'POST'):
+        usage_volume = float(request.json.get('new_usage_volume'))
+        update_result = update_usage_volume_from_userid(userid, usage_volume)
+        resp = None
+        if(update_result):
+            resp = make_response(f"update succeed", 200)
+        else:
+            resp = make_response(f"update failed", 400)
+        return resp
+
 
 # get user name from cookie userid
-@app.route('/api/get_username')
+@app.route('/api/get_username', methods=['GET'])
 def get_username():
     userid = request.cookies.get('userid')
     connection = sqlite3.connect(database=database_path)
     cursor = connection.cursor()
     try:
-        rows = cursor.execute("select * from users where userid = ?", (userid,)).fetchall()
+        rows = cursor.execute(
+            "select * from users where userid = ?", (userid,)).fetchall()
         if(len(rows) == 0):
             return "None"
         else:
@@ -115,6 +185,7 @@ def get_username():
     finally:
         cursor.close()
         connection.close()
+
 
 @app.route('/api/login', methods=['POST'])
 def login():

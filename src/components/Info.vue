@@ -75,6 +75,10 @@ import mailImg from '@/assets/popup_mail.gif'
     name: {
       type: String,
       default: 'NO-NAME'
+    },
+    usageVolume: {
+      type: Number,
+      default: 1
     }
   }
 })
@@ -85,7 +89,7 @@ export default class Info extends Vue {
   minute!: string
   second!: string
   startDate!: Date
-  usageNumber!: number // record as bytes
+  usageVolume!: number // record as bytes
   buttonColor!: string
   /* eslint-disable-next-line */
   links!: Array<{name : string, link : string, img : any}>
@@ -96,7 +100,7 @@ export default class Info extends Vue {
       minute: '00',
       second: '00',
       startDate: new Date(),
-      usageNumber: 10000000000,
+      usageVolume: this.usageVolume,
       buttonColor: '#c0bdcc',
       links: [
         {
@@ -142,24 +146,33 @@ export default class Info extends Vue {
   }
 
   public clickDisconnect () : void {
+    this.axios.post('/api/usage_volume', {
+      // 0 to 1 GB
+      new_usage_volume: this.usageVolume + Math.floor(Math.random() * 1024 * 1024 * 1024)
+    }).then(() => {
+      document.cookie = 'userid=; Max-Age=0'
+    }).catch(() => {
+      console.log('update usage failed')
+    })
     alert('您已断开连接')
+    window.location.href = '/'
   }
 
   get usageNumberLength () : string {
-    const percentage = Math.ceil(Math.min(this.usageNumber / (125 * 1024 * 1024 * 1024), 1) * 100)
+    const percentage = Math.ceil(Math.min(this.usageVolume / (125 * 1024 * 1024 * 1024), 1) * 100)
     return `${percentage}%`
   }
 
   get usageNumberText () : string {
     // as bytes
-    if (this.usageNumber < 1024) {
-      return `${this.usageNumber}B`
-    } else if (this.usageNumber < 1024 * 1024) {
-      return `${(this.usageNumber / 1024).toFixed(2)}KB`
-    } else if (this.usageNumber < 1024 * 1024 * 1024) {
-      return `${(this.usageNumber / (1024 * 1024)).toFixed(2)}MB`
+    if (this.usageVolume < 1024) {
+      return `${this.usageVolume}B`
+    } else if (this.usageVolume < 1024 * 1024) {
+      return `${(this.usageVolume / 1024).toFixed(2)}KB`
+    } else if (this.usageVolume < 1024 * 1024 * 1024) {
+      return `${(this.usageVolume / (1024 * 1024)).toFixed(2)}MB`
     } else {
-      return `${(this.usageNumber / (1024 * 1024 * 1024)).toFixed(2)}GB`
+      return `${(this.usageVolume / (1024 * 1024 * 1024)).toFixed(2)}GB`
     }
   }
 }

@@ -10,6 +10,7 @@ FROM python:3.10-alpine
 COPY --from=build_Stage /usr/src/app/dist /app/dist
 COPY ./requirements.txt /app/requirements.txt
 COPY ./main.py /app/main.py
+COPY ./server.py /app/server.py
 RUN ls -la /app
 WORKDIR /app
 RUN pip install -r requirements.txt

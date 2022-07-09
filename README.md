@@ -2,7 +2,7 @@
 
 FAKE THURSDAY UNIVERSITY NETWORK
 
-(online website is just to be done :)
+See <http://net.cqqqwq.com>
 
 ## Project setup
 
@@ -21,6 +21,11 @@ npm run lint
 
 ## Deploy
 
+Two ways:
+
+1. Local deploy with Node & python
+2. Deploy with docker
+
 ### Local Deploy
 
 1. Compiles Static files(frontend)
@@ -37,4 +42,14 @@ python3 main.py
 
 ### Docker Deploy
 
-TBD
+build image:
+
+```bash
+docker build campus-net .
+```
+
+run container
+
+```bash
+docker run -dp 5000:5000 campus-net 
+```

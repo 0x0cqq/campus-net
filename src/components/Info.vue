@@ -186,7 +186,11 @@ export default class Info extends Vue {
 }
 #info{
   position: relative;
-  margin: 10% 5% ;
+  max-width: 600px;
+  min-height: 600px;
+  width: 100%;
+  height: 100%;
+  margin: auto;
 }
 #greeting {
   position: absolute;

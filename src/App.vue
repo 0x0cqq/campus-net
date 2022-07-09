@@ -25,9 +25,6 @@
     <p>华清大学土豆种植技术中心</p>
     <p class="english">InfoPotato Technology Center of Thursday University</p>
   </div>
-  <a href="./succeed">
-    <button>test</button>
-  </a>
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'

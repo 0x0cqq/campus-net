@@ -1,3 +1,5 @@
+# See [report2](report2.md) for more details.
+
 # campus-net
 
 FAKE THURSDAY UNIVERSITY NETWORK

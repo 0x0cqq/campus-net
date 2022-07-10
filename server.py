@@ -134,8 +134,11 @@ create_db_if_not_exist()
 # server part
 @app.route('/')
 def index():
-    return render_template('index.html')
-
+    # check cookie and redirect to succeed page
+    if(request.cookies.get('userid') is not None and check_userid_exist(request.cookies.get('userid'))):
+        return redirect('/succeed')
+    else:
+        return render_template('index.html')
 
 @app.route('/succeed')
 def succeed():

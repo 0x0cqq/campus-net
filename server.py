@@ -151,6 +151,10 @@ def succeed():
         # disable cache
         return make_response(render_template("succeed.html"), 200, {'Cache-Control': 'no-cache'})
 
+@app.route('/chart')
+def chart():
+    return make_response(render_template("chart.html"), 200, {'Cache-Control': 'no-cache'})
+
 # API part
 
 # get/update user usage volume by cookie userid

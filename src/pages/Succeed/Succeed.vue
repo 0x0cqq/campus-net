@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import Info from '../../components/Info.vue'
+import Info from '@/components/Info.vue'
 
 @Options({
   components: {

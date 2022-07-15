@@ -20,6 +20,11 @@ module.exports = {
       entry: 'src/pages/Succeed/main.ts',
       template: 'public/succeed.html',
       title: '华清大学校园网 Tsinghua University Network'
+    },
+    chart: {
+      entry: 'src/pages/Chart/main.ts',
+      template: 'public/chart.html',
+      title: '网络图'
     }
   }
 }

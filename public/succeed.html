@@ -12,6 +12,20 @@
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="succeed"></div>
+    <div id="chart-block">
+      <h2>流量使用情况</h2>
+      <div id="chart"></div>
+    </div>
+    <style>
+      #chart-block {
+        margin: 0% 20%;
+      }
+      @media (max-width: 600px) {
+        #chart-block {
+          margin: 0% 5%;
+        }
+      }
+    </style>
     <!-- built files will be auto injected -->
   </body>
 </html>

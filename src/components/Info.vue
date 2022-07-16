@@ -187,7 +187,7 @@ export default class Info extends Vue {
 #info{
   position: relative;
   max-width: 600px;
-  min-height: 600px;
+  min-height: 350px;
   width: 100%;
   height: 100%;
   margin: auto;
@@ -431,6 +431,9 @@ a:hover {
     position: relative !important;
     left: 0px;
     top: 48px;
+  }
+  #info {
+    min-height: 500px;
   }
   #greeting {
     position: relative !important;

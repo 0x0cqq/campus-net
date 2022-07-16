@@ -2,7 +2,7 @@
   <LineChart :data="chartData" width="595" height="248" />
 </template>
 
-<script>
+<script lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import LineChart from './LineChart.vue'
 
@@ -13,128 +13,60 @@ export default {
   },
   setup () {
     const counter = ref(0)
-    const increment = ref(0)
-    const range = ref(35)
+    const range = ref(10)
+    const currentDate = ref(new Date())
 
-    // Dummy data to be looped
-    const sampleData = [
-      57.81,
-      57.75,
-      55.48,
-      54.28,
-      53.14,
-      52.25,
-      51.04,
-      52.49,
-      55.49,
-      56.87,
-      53.73,
-      56.42,
-      58.06,
-      55.62,
-      58.16,
-      55.22,
-      58.67,
-      60.18,
-      61.31,
-      63.25,
-      65.91,
-      64.44,
-      65.97,
-      62.27,
-      60.96,
-      59.34,
-      55.07,
-      59.85,
-      53.79,
-      51.92,
-      50.95,
-      49.65,
-      48.09,
-      49.81,
-      47.85,
-      49.52,
-      50.21,
-      52.22,
-      54.42,
-      53.42,
-      50.91,
-      58.52,
-      53.37,
-      57.58,
-      59.09,
-      59.36,
-      58.71,
-      59.42,
-      55.93,
-      57.71,
-      50.62,
-      56.28,
-      57.37,
-      53.08,
-      55.94,
-      55.82,
-      53.94,
-      52.65,
-      50.25
-    ]
-
-    const slicedData = ref(sampleData.slice(0, range.value))
+    // list of range number of 0
+    const sampleData = ref(Array<number>(range.value).fill(0))
 
     // Generate fake dates from now to back in time
     const generateDates = () => {
-      const now = new Date()
-      const dates = []
-      sampleData.forEach((v, i) => {
-        dates.push(new Date(now - 2000 - i * 2000))
+      const dates = [] as Date[]
+      sampleData.value.forEach((v, i) => {
+        dates.push(new Date((Math.floor(currentDate.value.getTime() / 1000) - i * 2) * 1000))
       })
       return dates
     }
 
-    const slicedLabels = ref(generateDates().slice(0, range.value).reverse())
-
-    // Fake update every 2 seconds
-    const interval = ref(null)
-    onMounted(() => {
-      interval.value = setInterval(() => {
-        counter.value++
-      }, 2000)
-    })
-    onUnmounted(() => {
-      clearInterval(interval)
-    })
+    const sampleLabels = ref(generateDates().reverse())
 
     // Loop through data array and update
     watch(counter, () => {
-      increment.value++
-      if (increment.value + range.value < sampleData.length) {
-        slicedData.value.shift()
-        slicedData.value.push(sampleData[increment.value + range.value])
-      } else {
-        increment.value = 0
-        range.value = 0
-      }
-      slicedLabels.value.shift()
-      slicedLabels.value.push(new Date())
+      currentDate.value = new Date((Math.floor(currentDate.value.getTime() / 1000) + 2) * 1000)
+      sampleLabels.value.shift()
+      sampleLabels.value.push(currentDate.value)
+      sampleData.value.shift()
+      sampleData.value.push(sampleData.value[sampleData.value.length - 1] + Math.random() * 10)
     })
 
     const chartData = computed(() => {
       return {
-        labels: slicedLabels.value,
+        labels: sampleLabels.value,
         datasets: [
           {
-            data: [...slicedData.value]
+            data: [...sampleData.value]
           }
         ]
       }
     })
 
+    // Fake update every 2 seconds
+    const interval = ref<number>(0)
+    onMounted(() => {
+      interval.value = setInterval(() => {
+        counter.value++
+      }, 2000)
+    })
+
+    onUnmounted(() => {
+      clearInterval(interval.value)
+    })
+
     return {
       counter,
-      increment,
       range,
-      slicedData,
-      slicedLabels,
+      sampleData,
+      sampleLabels,
       interval,
       chartData
     }

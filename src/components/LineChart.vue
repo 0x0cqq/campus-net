@@ -2,7 +2,7 @@
   <canvas ref="canvas" :x-data="data" :width="width" :height="height"></canvas>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import {
   Chart,
@@ -27,19 +27,20 @@ Chart.register(
 export default {
   name: 'LineChart',
   props: ['data', 'width', 'height'],
-  setup (props) {
+  setup (props: any) {
     const canvas = ref(null)
     const chartValue = ref(null)
     const chartDeviation = ref(null)
 
-    let chart = null
+    let chart: Chart | null = null
 
     onMounted(() => {
       const ctx = canvas.value
-      chart = new Chart(ctx, {
+      chart = new Chart(ctx as any, {
         type: 'line',
         data: props.data,
         options: {
+          borderColor: 'rgb(75, 192, 192)',
           scales: {
             x: {
               type: 'time',
@@ -64,22 +65,20 @@ export default {
       })
     })
 
-    onUnmounted(() => chart.destroy())
+    onUnmounted(() => { if (chart !== null) chart.destroy() })
 
     watch(
       () => props.data,
       (data) => {
-        // update chart
-        chart.data = data
-        chart.update()
+        if (chart !== null) {
+          // update chart
+          chart.data = data
+          chart.update()
+        }
       }
     )
 
-    return {
-      canvas,
-      chartValue,
-      chartDeviation
-    }
+    return { canvas, chartValue, chartDeviation }
   }
 }
 </script>

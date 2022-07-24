@@ -16,21 +16,16 @@ import {
 import 'chartjs-adapter-moment'
 
 Chart.register(
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  TimeScale,
-  Tooltip
+  LineController, LineElement, PointElement, LinearScale, TimeScale, Tooltip
 )
 
 export default {
   name: 'LineChart',
   props: ['data', 'width', 'height'],
   setup (props: any) {
+    const chartDev = ref(null)
     const canvas = ref(null)
     const chartValue = ref(null)
-    const chartDeviation = ref(null)
 
     let chart: Chart | null = null
 
@@ -54,31 +49,32 @@ export default {
               }
             }
           },
+          animation: false,
+          maintainAspectRatio: false,
+          resizeDelay: 200,
           interaction: {
             intersect: false,
             mode: 'nearest'
-          },
-          animation: false,
-          maintainAspectRatio: false,
-          resizeDelay: 200
+          }
         }
       })
     })
 
+    // destroy
     onUnmounted(() => { if (chart !== null) chart.destroy() })
 
+    // reactive data update
     watch(
       () => props.data,
       (data) => {
         if (chart !== null) {
-          // update chart
           chart.data = data
           chart.update()
         }
       }
     )
 
-    return { canvas, chartValue, chartDeviation }
+    return { canvas, chartValue, chartDeviation: chartDev }
   }
 }
 </script>
